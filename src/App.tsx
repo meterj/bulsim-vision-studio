@@ -45,8 +45,8 @@ export default function App() {
   const [selectedPurpose, setSelectedPurpose] = useState('');
   const [selectedSpace, setSelectedSpace] = useState('');
   const [intensity, setIntensity] = useState(50); // 0: Modern, 100: Traditional
-  const [visualStyle, setVisualStyle] = useState<'human' | 'symbol' | 'space'>('symbol');
-  const [artStyle, setArtStyle] = useState<'musindo' | 'minhwa' | 'modern'>('musindo');
+  const [visualStyle, setVisualStyle] = useState<'human' | 'symbol' | 'space' | 'avatar' | 'phenomenon'>('symbol');
+  const [artStyle, setArtStyle] = useState<'musindo' | 'minhwa' | 'modern' | 'classic' | 'royal'>('musindo');
   const [history, setHistory] = useState<{
     input: string, 
     imageUrl: string, 
@@ -135,6 +135,33 @@ export default function App() {
     setShowKeyModal(false);
   };
 
+  const handleSupremeRitual = () => {
+    // Premium combinations for 'Supreme Spiritual Power'
+    const combinations = [
+      { deity: '산신령', purpose: '보호/벽사', space: '산신 제장', art: 'classic', visual: 'avatar', input: '태산의 정기를 품은 산신령의 위엄과 강력한 벽사의 기운' },
+      { deity: '용왕님', purpose: '복/재물', space: '바다/계곡', art: 'royal', visual: 'phenomenon', input: '심해의 여의주를 품은 용왕의 강림과 끝없는 재물의 파동' },
+      { deity: '칠성님', purpose: '건강/장수', space: '신단/신당', art: 'classic', visual: 'symbol', input: '북두칠성의 영롱한 빛이 내리는 수명장수와 무병발원의 서기' },
+      { deity: '바리공주', purpose: '천도/추모', space: '서천꽃밭', art: 'royal', visual: 'space', input: '만개한 서천꽃밭을 가로질러 망자를 인도하는 바리공주의 자비' },
+      { deity: '오방신장', purpose: '액막이 (Warding)', space: '굿청/마당', art: 'classic', visual: 'avatar', input: '오방기가 휘날리는 가운데 악귀를 쳐내는 신장님들의 역동적인 기세' }
+    ];
+
+    const pick = combinations[Math.floor(Math.random() * combinations.length)];
+    
+    setSelectedDeity(pick.deity);
+    setSelectedPurpose(pick.purpose);
+    setSelectedSpace(pick.space);
+    setArtStyle(pick.art as any);
+    setVisualStyle(pick.visual as any);
+    setIntensity(100); // Always 100% traditional for supreme
+    setResolution('4K'); // Max quality
+    setInput(pick.input);
+    
+    // Add a slight delay to trigger generation for better UX
+    setTimeout(() => {
+      // Small visual feedback could go here
+    }, 100);
+  };
+
   const handleGenerate = async () => {
     if (!input.trim()) return;
     
@@ -154,8 +181,18 @@ export default function App() {
         selectedPurpose ? `제의 목적: ${selectedPurpose}` : '',
         selectedSpace ? `제의 공간: ${selectedSpace}` : '',
         `강도: ${intensity}% 전통 고증`,
-        `시각 스타일: ${visualStyle === 'human' ? '인간형' : visualStyle === 'symbol' ? '상징형' : '공간형'}`,
-        `예술 양식: ${artStyle === 'musindo' ? '무신도' : artStyle === 'minhwa' ? '민화' : artStyle === 'bulhwa' ? '불화' : '현대적'}`
+        `시각 스타일: ${
+          visualStyle === 'human' ? '인간형' : 
+          visualStyle === 'symbol' ? '상징형' : 
+          visualStyle === 'space' ? '공간형' : 
+          visualStyle === 'avatar' ? '현신(Avatar)' : '영험 현상'
+        }`,
+        `예술 양식: ${
+          artStyle === 'musindo' ? '무신도' : 
+          artStyle === 'classic' ? '정통 무신도' : 
+          artStyle === 'royal' ? '궁중 채색화' : 
+          artStyle === 'minhwa' ? '민화' : '현대적'
+        }`
       ].filter(Boolean).join(', ');
 
       let interpretation: InterpretationResult;
@@ -351,7 +388,15 @@ export default function App() {
                 <Wind className="w-4 h-4" />
                 <h2 className="text-sm uppercase tracking-widest font-bold">제의 설계 (Ritual Design)</h2>
               </div>
-              <div className="flex gap-2 p-1 bg-white/5 rounded-xl border border-white/10">
+              <button 
+                onClick={handleSupremeRitual}
+                className="btn-supreme px-6 py-2.5 rounded-2xl text-xs font-black text-white uppercase tracking-[0.2em] flex items-center gap-2 group hover:scale-105 transition-all"
+              >
+                <Sparkles className="w-4 h-4 text-yellow-300 group-hover:rotate-12 transition-transform" />
+                최고의 영험 (Supreme Power)
+              </button>
+            </div>
+            <div className="flex gap-2 p-1 bg-white/5 rounded-xl border border-white/10">
                 <button 
                   onClick={() => setGenMode('vision')}
                   className={`px-3 py-1.5 rounded-lg text-[13px] font-bold transition-all ${
@@ -373,7 +418,6 @@ export default function App() {
                   영험한 부적
                 </button>
               </div>
-            </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="space-y-2">
@@ -444,6 +488,8 @@ export default function App() {
               <span className="text-sm text-white/30 mr-2 font-mono">Art Style</span>
               {[
                 { id: 'musindo', name: '무신도' },
+                { id: 'classic', name: '정통 무신도' },
+                { id: 'royal', name: '궁중 채색화' },
                 { id: 'minhwa', name: '민화' },
                 { id: 'modern', name: '현대적' }
               ].map((style) => (
@@ -465,6 +511,8 @@ export default function App() {
               <span className="text-sm text-white/30 mr-2 font-mono">Visual Style</span>
               {[
                 { id: 'human', name: '인간형' },
+                { id: 'avatar', name: '현신(Avatar)' },
+                { id: 'phenomenon', name: '영험 현상' },
                 { id: 'symbol', name: '상징형' },
                 { id: 'space', name: '공간형' }
               ].map((style) => (

@@ -47,6 +47,7 @@ body {
 .shamanic-gradient-text {
   background: linear-gradient(to right, #ff4e00, #ffcc00, #00ccff);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -63,4 +64,35 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
+}
+
+/* Supreme Button Styles */
+.btn-supreme {
+  background: linear-gradient(135deg, #ff4e00 0%, #ffcc00 50%, #7000ff 100%);
+  background-size: 200% 200%;
+  animation: supreme-gradient 5s ease infinite, supreme-glow 2s ease-in-out infinite alternate;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 20px rgba(255, 78, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-supreme:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 30px rgba(255, 78, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+@keyframes supreme-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes supreme-glow {
+  from { box-shadow: 0 0 15px rgba(255, 78, 0, 0.3), inset 0 0 10px rgba(255, 255, 255, 0.1); }
+  to { box-shadow: 0 0 25px rgba(255, 78, 0, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.2); }
+}
+
+.shamanic-text-glow {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }

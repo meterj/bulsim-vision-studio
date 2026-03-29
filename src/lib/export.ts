@@ -20,6 +20,8 @@ export function generateShamanicHtml(
 
   const artStyleNames: Record<string, string> = {
     'musindo': '무신도 (Deity Painting)',
+    'classic': '정통 무신도 (Classic Musindo)',
+    'royal': '궁중 채색화 (Royal Court Style)',
     'minhwa': '민화 (Folk Art)',
     'modern': '현대적 재해석 (Modern)'
   };

@@ -134,17 +134,20 @@ export async function generateShamanicImage(
   const selectedArtStyle = artStylePrompts[artStyle] || artStylePrompts['musindo'];
 
   const systemPrompt = mode === 'vision' 
-    ? `An authentic, high-quality ${selectedArtStyle}. ${prompt}. 
-       Key Visuals: Shamanic ritual tools (Obanggi flags, bells, fans), traditional robes (Mu-bok), and sacred spaces like Seonang-dang with colorful ribbons.
-       Color Palette: Saturated Obangsaek (Red, Blue, Yellow, White, Black). 
-       Composition: Divine figures with majestic presence. Traditional shamanic patterns (Saljang).
-       CRITICAL: Strictly Korean Shamanism (Muism). NO Buddhism, NO Pagodas, NO Monks, NO Buddhist Statues, NO Japanese/Chinese temple styles.
-       Atmosphere: Powerful, sacred, and spiritually charged.`
-    : `An authentic Korean Shamanic Talisman (Bujeok). ${prompt}.
-       Visual Style: Deep red cinnabar (Jusa) ink on aged yellow mulberry paper. 
-       Content: Abstract spiritual symbols and flowing brush strokes. No readable text.
-       Composition: Centered, vertical, traditional talisman layout.
-       Avoid: Modern fonts, unrelated occult symbols, Buddhist motifs.`;
+    ? `An exquisite, high-end ${selectedArtStyle}. ${prompt}. 
+       Visual Quality: High-resolution 8k professional shamanic ritual art. 
+       Core Aesthetic: Traditional Korean mineral pigments (Seokchae) effect. Use rich, deep cinnabar red (Jusa), deep indigo, and charcoal blacks. 
+       Fine Details: Intricate gold leaf (Geumbak) accents on sacred patterns. Masterful energetic brush strokes with visible ink textures (Pillyeok). 
+       Key Visuals: Detailed shamanic ritual tools (Obanggi flags, bells, fans), precise traditional robes (Mu-bok), and sacred spaces like Seonang-dang with vibrant ritual ribbons.
+       Composition: Symmetrical, centered divine figures with powerful presence. Add atmospheric depth with mystical fog, traditional clouds, and spiritual auras.
+       CRITICAL: Strictly Korean Shamanism (Muism) origins. NO Buddhism, NO Pagodas, No Monks, NO Japanese Torii, No Chinese styles.
+       Atmosphere: Majestic, spiritually charged, and highly sophisticated.`
+    : `An authentic, premium Korean Shamanic Talisman (Bujeok). ${prompt}.
+       Visual Style: Deep dark-red cinnabar (Jusa) ink with visible brush textures on aged, fibrous yellow mulberry paper. 
+       Content: Stylized, mysterious abstract shamanic symbols and masterful calligraphic lines.
+       Composition: Centered, vertical, authoritative talisman layout.
+       Texture: Authentic paper texture, slightly bleeding ink from brush weight.
+       CRITICAL: No readable text. Only abstract spiritual symbols.`;
 
   const response = await getAIClient().models.generateContent({
     model: "gemini-3.1-flash-image-preview",
